@@ -31,15 +31,17 @@ if(!empty($_POST)){
 
  /**編集内容確認ボタン押した時の処理 */   
  if(isset($_POST['update-check'])){
-   if(empty($error)){
+   if(empty($error) && $_FILES['new-image']['size'] !== 0){
     $image = date('YmdHis'). $_FILES['new-image']['name'];
     move_uploaded_file($_FILES['new-image']['tmp_name'],'user_picture/'. $image); 
 
     $_SESSION['update'] = $_POST;
     $_SESSION['update']['new-image'] = $image;
+  }else{
+    $_SESSION['update'] = $_POST;
+  }
 
    header("Location: user_update_check.php?id=".$user['id']);
- }
 }
 ?>
 

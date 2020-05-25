@@ -17,6 +17,7 @@ if($_SESSION['id'] == $user_id){
 var_dump($user['picture']);
 var_dump($_SESSION['update']['new-image']);
 var_dump($fileName);
+
 ?>
 
 
@@ -51,11 +52,10 @@ var_dump($fileName);
 
 
     <li>プロフィール写真</li>
-       <?php if($fileName =='jpg'|| 'gif' || 'png'):?>
+       <?php if(isset($_SESSION['update']['new-image'])):?>
         <img src="user_picture/<?php print(htmlspecialchars($_SESSION['update']['new-image'],ENT_QUOTES))?>">
        <?php else:?>
-
-      <img src="user_picture/<?php print($user['picture']);?>" alt="">
+      <img src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" >
        <?php endif;?>
 
 
