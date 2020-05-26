@@ -4,20 +4,28 @@ session_start();
 
 $user_id = $_REQUEST['id'];
 
-$fileName = substr($_SESSION['update']['new-image'],-3);
-
-
-
 if($_SESSION['id'] == $user_id){
   $users = $db->prepare('SELECT * FROM users WHERE id=?');
   $users->execute(array($user_id));
   $user = $users->fetch();
 }
 
-var_dump($user['picture']);
-var_dump($_SESSION['update']['new-image']);
-var_dump($fileName);
 
+
+
+if(isset($_POST['update-buton']) && isset($_SESSION['update']['new-image'])){
+  $userUpdate = $db->prepare('UPDATE users SET name=?,email=?,city=?,picture=? WHERE id=?');
+  $userUpdate->execute(array($_SESSION['update']['name'],$_SESSION['update']['email'],$_SESSION['update']['city'],$_SESSION['update']['new-image'],$user_id));
+  header('Location: user_update_complete.php');
+  exit();
+}
+
+if(isset($_POST['update-buton']) && !isset($_SESSION['update']['new-image'])){
+  $userUpdate = $db->prepare('UPDATE users SET name=?,email=?,city=? WHERE id=?');
+  $userUpdate->execute(array($_SESSION['update']['name'],$_SESSION['update']['email'],$_SESSION['update']['city'],$user_id));
+  header('Location: user_update_complete.php');
+  exit();
+}
 ?>
 
 
@@ -60,7 +68,7 @@ var_dump($fileName);
 
 
   
-  <a class="buton rewrite" href="user_update.php?id=<?php print(htmlspecialchars($user_id,ENT_QUOTES));?>">入力内容を訂正する</a><input class="buton submit" type="submit" value="登録する">
+  <a class="buton rewrite" href="user_update.php?id=<?php print(htmlspecialchars($user_id,ENT_QUOTES));?>">入力内容を訂正する</a><input class="buton submit" type="submit" name="update-buton" value="登録する">
   </form>
 </body>
 </html>
