@@ -47,9 +47,9 @@ $posts->execute(array($user_id));
    
    <a class="buton rewrite" href="rewrite.php?id=<?php print(htmlspecialchars($post['id'],ENT_QUOTES));?>">投稿内容を変更する</a>
    <?php endif;?>
-   
-
   <?php endforeach;?>
+
+  <a href="index.php">投稿一覧へ戻る</a>
   
 
  

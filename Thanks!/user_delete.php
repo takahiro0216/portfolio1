@@ -11,8 +11,9 @@ $user = $user_pictures->fetch();
 
 if(isset($_POST['user_delete'])){
   if($_SESSION['id'] == $user_id){
-  $user_del = $db->prepare('DELETE FROM users WHERE id=?');
+  $user_del = $db->prepare('DELETE users,posts FROM users LEFT JOIN posts ON users.id = posts.user_id WHERE users.id=?');
   $user_del->execute(array($user_id));}
+  
 
   header('Location: user_delete_complete.php');
   exit();
@@ -39,6 +40,8 @@ if(isset($_POST['user_delete'])){
    <p class="city"><?php print(htmlspecialchars($user['city'],ENT_QUOTES));?></p>
 
    <h3 class="delete-message">※ユーザーアカウントを削除してもよろしいですか？</h3>
+
+   <h4 class="delete-message">※これまで投稿した内容も全て削除されます</h4>
 
    <a class="buton login" href="user_page.php?id=<?php print(htmlspecialchars($user['id'],ENT_QUOTES));?>">ユーザーページへ戻る</a>
    <input class="buton submit" type="submit" name="user_delete" value="削除する">
