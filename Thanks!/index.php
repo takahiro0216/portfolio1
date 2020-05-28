@@ -36,6 +36,7 @@ $start = ($page - 1) * 5;
  $posts->bindParam(1, $start, PDO::PARAM_INT);
  $posts->execute();
 
+
 ?>
 
 
@@ -78,6 +79,8 @@ $start = ($page - 1) * 5;
   <?php foreach($posts as $post):?> 
   <div class="post-usre_picture">
   <img class="user_picture" src="user_picture/<?php print(htmlspecialchars($post['picture']))?>" alt="">
+  
+  
   
    <p class="message"><?php print(htmlspecialchars($post['message']))?></p>
    </div>

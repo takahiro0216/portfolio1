@@ -32,6 +32,7 @@ $posts->execute(array($user_id));
 
    <?php if($_SESSION['id'] == $user['id']):?> 
     <a href="user_update.php?id=<?php print(htmlspecialchars($user['id']));?>">ユーザー情報を編集する</a>
+    <a href="password_change.php?id=<?php print(htmlspecialchars($user['id'],ENT_QUOTES)); ?>">パスワードを変更する</a>
     <a href="user_delete.php?id=<?php print(htmlspecialchars($user['id']));?>">ユーザーアカウントを削除する</a>
    <?php endif;?>
   </div>
