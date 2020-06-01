@@ -8,8 +8,8 @@ if($_SESSION['id'] == $user_id){
   $users = $db->prepare('SELECT * FROM users WHERE id=?');
   $users->execute(array($user_id));
   $user = $users->fetch();
+ 
 }
-
 
 
 
@@ -61,7 +61,7 @@ if(isset($_POST['update-buton']) && !isset($_SESSION['update']['new-image'])){
 
     <li>プロフィール写真</li>
        <?php if(isset($_SESSION['update']['new-image'])):?>
-        <img src="user_picture/<?php print(htmlspecialchars($_SESSION['update']['new-image'],ENT_QUOTES))?>">
+        <img src="user_picture/<?php print(htmlspecialchars($_SESSION['update']['new-image'],ENT_QUOTES))?>"> 
        <?php else:?>
       <img src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" >
        <?php endif;?>

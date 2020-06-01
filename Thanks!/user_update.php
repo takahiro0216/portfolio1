@@ -8,6 +8,8 @@ if($_SESSION['id'] == $user_id){
   $users = $db->prepare('SELECT * FROM users WHERE id=?');
   $users->execute(array($user_id));
   $user = $users->fetch();
+
+  $ext = substr($user['picture'],-3);
 }
 
 /**エラーに関するコード **/
@@ -133,7 +135,11 @@ if(!empty($_POST)){
 
 <p>プロフィール写真(任意)</p>
 
-<img id="user-picture" src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" alt="ユーザー画像">
+<?php if($ext == 'jpg' || $ext == 'png' || $ext == 'gif' ):?>
+ <img id="user-picture" src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" alt="ユーザー画像">
+ <?php else:?>
+   <img id="user-picture" src="user_picture/no_image_yoko.jpg" alt="">
+<?php endif;?>
 
  <input type="file" name="new-image">
 

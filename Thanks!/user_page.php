@@ -8,8 +8,11 @@ $user_pictures = $db->prepare('SELECT * FROM users  WHERE id=?');
 $user_pictures -> execute(array($user_id));
 $user = $user_pictures->fetch(); 
 
+$ext = substr($user['picture'],-3);
+
 $posts = $db->prepare('SELECT * FROM posts WHERE user_id=?');
 $posts->execute(array($user_id));
+
 
 ?>
 
@@ -25,14 +28,18 @@ $posts->execute(array($user_id));
 
 <body>
  <div class="user">
+ <?php if($ext == 'jpg' || $ext == 'png' || $ext == 'gif' ):?>
    <img id="user-picture" src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" alt="ユーザー画像">
+<?php else:?>
+   <img id="user-picture" src="user_picture/no_image_yoko.jpg" alt="">
+<?php endif;?>
 
    <p class="user-name"><?php print(htmlspecialchars($user['name']));?></p>
    <p class="city"><?php print(htmlspecialchars($user['city'],ENT_QUOTES));?></p>
 
    <?php if($_SESSION['id'] == $user['id']):?> 
     <a href="user_update.php?id=<?php print(htmlspecialchars($user['id']));?>">ユーザー情報を編集する</a>
-    <a href="password_change.php?id=<?php print(htmlspecialchars($user['id'],ENT_QUOTES)); ?>">パスワードを変更する</a>
+    
     <a href="user_delete.php?id=<?php print(htmlspecialchars($user['id']));?>">ユーザーアカウントを削除する</a>
    <?php endif;?>
   </div>

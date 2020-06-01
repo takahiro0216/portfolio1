@@ -35,10 +35,8 @@ $start = ($page - 1) * 5;
  $posts = $db->prepare('SELECT u.name,u.picture,p.* FROM users u,posts p WHERE u.id = p.user_id ORDER BY p.create_time DESC LIMIT ?,5');
  $posts->bindParam(1, $start, PDO::PARAM_INT);
  $posts->execute();
-
-
+ 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -77,11 +75,13 @@ $start = ($page - 1) * 5;
 
  <section class="post">
   <?php foreach($posts as $post):?> 
+  <?php $ext = substr($post['picture'],-3);?>
   <div class="post-usre_picture">
-  <img class="user_picture" src="user_picture/<?php print(htmlspecialchars($post['picture']))?>" alt="">
-  
-  
-  
+  <?php if($ext == 'jpg' || $ext == 'png' || $ext == 'gif' ):?>
+   <img class="user_picture" src="user_picture/<?php print(htmlspecialchars($post['picture']))?>" alt="">
+   <?php else:?>
+   <img class="user_picture" src="user_picture/no_image_yoko.jpg" alt="">
+<?php endif;?>
    <p class="message"><?php print(htmlspecialchars($post['message']))?></p>
    </div>
 
