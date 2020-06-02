@@ -9,6 +9,8 @@ if($_SESSION['id'] == $user_id){
   $users->execute(array($user_id));
   $user = $users->fetch();
  
+  $ext = substr($user['picture'],-3);
+  
 }
 
 
@@ -62,6 +64,9 @@ if(isset($_POST['update-buton']) && !isset($_SESSION['update']['new-image'])){
     <li>プロフィール写真</li>
        <?php if(isset($_SESSION['update']['new-image'])):?>
         <img src="user_picture/<?php print(htmlspecialchars($_SESSION['update']['new-image'],ENT_QUOTES))?>"> 
+       <?php elseif($ext != 'jpg' || $ext != 'png' || $ext != 'gif' ):?>
+        <img id="user-picture" src="user_picture/no_image_yoko.jpg" alt="">
+
        <?php else:?>
       <img src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" >
        <?php endif;?>

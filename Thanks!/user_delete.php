@@ -5,9 +5,13 @@ session_start();
 
 $user_id = $_REQUEST['id'];
 
+if($_SESSION['id'] == $user_id){
 $user_pictures = $db->prepare('SELECT * FROM users WHERE id=?');
 $user_pictures -> execute(array($user_id));
 $user = $user_pictures->fetch(); 
+
+$ext = substr($user['picture'],-3);
+}
 
 if(isset($_POST['user_delete'])){
   if($_SESSION['id'] == $user_id){
@@ -34,7 +38,11 @@ if(isset($_POST['user_delete'])){
 
 <form action="" method="post">
 <div class="user">
+  <?php if($ext == 'jpg' || $ext == 'png' || $ext == 'gif'):?>
    <img id="user-picture" src="user_picture/<?php print(htmlspecialchars($user['picture'],ENT_QUOTES));?>" alt="ユーザー画像">
+  <?php else:?>
+    <img id="user-picture" src="user_picture/no_image_yoko.jpg" alt="">
+  <?php endif;?>
 
    <p class="user-name"><?php print(htmlspecialchars($user['name']));?></p>
    <p class="city"><?php print(htmlspecialchars($user['city'],ENT_QUOTES));?></p>
